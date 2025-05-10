@@ -5,13 +5,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Testing\Fluent\Concerns\Has;
-use Laravel\Sanctum\Contracts\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
     //
-    use HasFactory, Notifiable,HasApiTokens;
+    use HasFactory, Notifiable;
 
     public function creator()
     {

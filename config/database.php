@@ -130,6 +130,11 @@ return [
         'update_date_on_publish' => true,
     ],
 
+    // 'testing' => [
+    //     'driver' => 'mysql',
+    //     'database' => ':memory:',
+    // ],
+
     /*
     |--------------------------------------------------------------------------
     | Redis Databases
