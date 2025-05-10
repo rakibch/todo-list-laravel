@@ -61,16 +61,48 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        echo '<pre>';
-        print_r($request->all());
-        exit();
-        // $this->authorize('create', Task::class);
+        $data = $request->validated();
+        $data['user_id'] = $request->user()->id;
+        $task = Task::create($data);
+        return response()->json($task, 201);
+    }
 
-        // $data = $request->validated();
-        // $data['user_id'] = $request->user()->id;
-        // $task = Task::create($data);
+    public function show(Task $task)
+    {
+        $this->authorizeTask($task);
+        return response()->json($task);
+    }
 
-        // return response()->json($task, 201);
+    public function update(UpdateTaskRequest $request, Task $task)
+    {
+        $this->authorizeTask($task);
+        $task->update($request->validated());
+        return response()->json($task);
+    }
+
+    public function destroy(Task $task)
+    {
+        $this->authorizeTask($task);
+        $task->delete();
+        return response()->json(['message' => 'Deleted successfully']);
+    }
+
+    protected function authorizeTask(Task $task)
+    {
+        if ($task->user_id !== auth()->id()) {
+            abort(403);
+        }
+    }
+
+    public function assign(Request $request, Task $task)
+    {
+        $this->authorize('update', $task); // or create a separate 'assign' ability
+        $request->validate([
+        'user_id' => 'required|exists:users,id',
+        ]);
+
+        $task->assignees()->syncWithoutDetaching([$request->user_id]);
+        return response()->json(['message' => 'User assigned to task.']);
     }
 }
  

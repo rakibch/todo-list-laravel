@@ -17,5 +17,7 @@ Route::middleware('auth:sanctum')->prefix('task')->group(function () {
     Route::get('/test-index',[TestController::class,'index']);
     // main routes
     Route::post('/add',[TaskController::class,'store']);
+    Route::get('/list',[TaskController::class,'index']);
+    Route::get('/show/{task}',[TaskController::class,'show']);
 
 });
