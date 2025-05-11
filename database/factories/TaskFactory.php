@@ -18,8 +18,8 @@ class TaskFactory extends Factory
             'user_id' => User::factory(),
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'status' => $this->faker->randomElement(['Todo', 'In Progress', 'Done']),
-            'priority' => $this->faker->randomElement(['Low', 'Medium', 'High']),
+            'status' => $this->faker->randomElement(['todo', 'inprogress', 'done']),
+            'priority' => $this->faker->randomElement(['low', 'medium', 'high']),
             'due_date' => now()->addDays(rand(1, 30)),
         ];
     }

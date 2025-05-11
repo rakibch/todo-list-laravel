@@ -24,8 +24,8 @@ class UpdateTaskRequest extends FormRequest
         return [
             'title' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'in:Todo,In Progress,Done',
-            'priority' => 'in:Low,Medium,High',
+            'status' => 'in:todo,inprogress,done',
+            'priority' => 'in:low,medium,high',
             'due_date' => 'nullable|date',
         ];
     }
