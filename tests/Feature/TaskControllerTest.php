@@ -56,12 +56,12 @@ class TaskControllerTest extends TestCase
         $taskData = [
             'title' => 'Test Task',
             'description' => 'Description here',
-            'status' => 'pending',
+            'status' => 'inprogress',
             'priority' => 'high',
             'due_date' => now()->addDays(3)->toDateString()
         ];
 
-        $response = $this->postJson('/api/tasks', $taskData);
+        $response = $this->postJson('/api/task/add', $taskData);
 
         $response->assertStatus(201)
                  ->assertJsonFragment(['title' => 'Test Task']);
