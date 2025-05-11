@@ -12,14 +12,18 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
+     * Cached hashed password used across generated users.
+     *
+     * This prevents multiple hash operations for the same default password ("password").
+     *
+     * @var string|null
      */
     protected static ?string $password;
 
-    /**
+     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed> The default attributes for a User model.
      */
     public function definition(): array
     {
@@ -34,6 +38,10 @@ class UserFactory extends Factory
 
     /**
      * Indicate that the model's email address should be unverified.
+     *
+     * This can be used when you want to test logic that requires unverified users.
+     *
+     * @return static
      */
     public function unverified(): static
     {
