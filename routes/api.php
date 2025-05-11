@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->prefix('task')->group(function () {
     Route::get('/list',[TaskController::class,'index']);
     Route::get('/show/{task}',[TaskController::class,'show']);
     Route::post('/update/{task}',[TaskController::class,'update']);
-    Route::post('/delete/{task}',[TaskController::class,'destroy']);
+    Route::delete('/delete/{task}',[TaskController::class,'destroy']);
+    Route::post('/assign/{task}',[TaskController::class,'assign']);
 });

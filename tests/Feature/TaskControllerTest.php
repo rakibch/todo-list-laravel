@@ -73,7 +73,7 @@ class TaskControllerTest extends TestCase
 
         $task = Task::factory()->create(['user_id' => $this->user->id]);
 
-        $response = $this->getJson("/api/tasks/{$task->id}");
+        $response = $this->getJson("/api/task/show/{$task->id}");
 
         $response->assertStatus(200)
                  ->assertJsonFragment(['id' => $task->id]);
@@ -85,11 +85,11 @@ class TaskControllerTest extends TestCase
 
         $task = Task::factory()->create(['user_id' => $this->user->id]);
 
-        $response = $this->putJson("/api/tasks/{$task->id}", [
+        $response = $this->postJson("/api/task/update/{$task->id}", [
             'title' => 'Updated Task',
             'status' => $task->status,
-            'priority' => $task->priority,
-            'due_date' => $task->due_date,
+            'priority' => $task->priority,  
+            'due_date' => $task->due_date->toDateString(),
         ]);
 
         $response->assertStatus(200)
@@ -102,7 +102,7 @@ class TaskControllerTest extends TestCase
 
         $task = Task::factory()->create(['user_id' => $this->user->id]);
 
-        $response = $this->deleteJson("/api/tasks/{$task->id}");
+        $response = $this->deleteJson("/api/task/delete/{$task->id}");
 
         $response->assertStatus(200)
                  ->assertJsonFragment(['message' => 'Deleted successfully']);
@@ -115,7 +115,7 @@ class TaskControllerTest extends TestCase
         $task = Task::factory()->create(['user_id' => $this->user->id]);
         $assignee = User::factory()->create();
 
-        $response = $this->postJson("/api/tasks/{$task->id}/assign", [
+        $response = $this->postJson("/api/task/assign/{$task->id}", [
             'user_id' => $assignee->id,
         ]);
 
@@ -131,7 +131,7 @@ class TaskControllerTest extends TestCase
         $anotherUser = User::factory()->create();
         $task = Task::factory()->create(['user_id' => $anotherUser->id]);
 
-        $response = $this->getJson("/api/tasks/{$task->id}");
+        $response = $this->getJson("/api/task/show/{$task->id}");
         $response->assertStatus(403);
     }
 }

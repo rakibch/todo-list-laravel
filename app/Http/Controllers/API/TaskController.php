@@ -96,13 +96,13 @@ class TaskController extends Controller
 
     public function assign(Request $request, Task $task)
     {
-        $this->authorize('update', $task); // or create a separate 'assign' ability
+        $this->authorizeTask($task); // Reuse your existing ownership check
         $request->validate([
-        'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
         ]);
-
         $task->assignees()->syncWithoutDetaching([$request->user_id]);
+
         return response()->json(['message' => 'User assigned to task.']);
-    }
+        }
 }
  
